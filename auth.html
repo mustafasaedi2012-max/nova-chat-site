@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#070b13"><title>{{ 'ساخت حساب' if mode == 'register' else 'ورود' }} | NOVA CHAT</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="auth-page">
+  <div class="ambient ambient-one"></div><div class="ambient ambient-two"></div>
+  <main class="auth-shell">
+    <a class="brand auth-brand" href="{{ url_for('login') }}"><span class="brand-mark"><i></i><i></i><i></i></span><span>NOVA<span class="brand-light">CHAT</span><small>YOUR SPACE. YOUR PEOPLE.</small></span></a>
+    <section class="auth-card">
+      <div class="eyebrow"><span class="pulse-dot"></span> SECURE CONNECTION</div>
+      <h1>{{ 'به نوا بپیوند' if mode == 'register' else 'خوش برگشتی' }}</h1>
+      <p class="auth-subtitle">{{ 'حساب خودت را بساز و وارد فضای نوا شو.' if mode == 'register' else 'برای ادامه وارد حساب کاربری‌ات شو.' }}</p>
+      {% with messages = get_flashed_messages(with_categories=true) %}{% if messages %}<div class="flash-stack">{% for category, message in messages %}<div class="flash {{ category }}">{{ message }}</div>{% endfor %}</div>{% endif %}{% endwith %}
+      <form method="post" class="auth-form">
+        <label for="username">نام کاربری</label><div class="input-wrap"><span class="input-icon">@</span><input id="username" name="username" autocomplete="username" minlength="3" maxlength="20" pattern="[A-Za-z0-9_]{3,20}" placeholder="مثلاً nova_user" required></div>
+        <label for="password">رمز عبور</label><div class="input-wrap"><span class="input-icon">⌑</span><input id="password" name="password" type="password" autocomplete="{{ 'new-password' if mode == 'register' else 'current-password' }}" minlength="8" placeholder="حداقل ۸ نویسه" required><button type="button" class="show-password" aria-label="نمایش رمز عبور">◉</button></div>
+        <button class="primary-button auth-submit" type="submit">{{ 'ساخت حساب' if mode == 'register' else 'ورود به نوا' }} <span>↗</span></button>
+      </form>
+      <div class="auth-switch">{{ 'از قبل حساب داری؟' if mode == 'register' else 'هنوز عضو نوا نیستی؟' }} <a href="{{ url_for('login' if mode == 'register' else 'register') }}">{{ 'وارد شو' if mode == 'register' else 'ساخت حساب' }}</a></div>
+    </section>
+    <div class="auth-foot"><span class="mini-lock">◇</span> ارتباط امن · فضای گفت‌وگوی عمومی</div>
+  </main>
+  <script>document.querySelector('.show-password')?.addEventListener('click',()=>{const p=document.querySelector('#password');p.type=p.type==='password'?'text':'password';});</script>
+</body></html>
